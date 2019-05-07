@@ -1,0 +1,22 @@
+{
+  "name": "psn-store-scraper",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Machigatta/psn-store-scraper.git"
+  },
+  "author": "Machigatta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Machigatta/psn-store-scraper/issues"
+  },
+  "homepage": "https://github.com/Machigatta/psn-store-scraper#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
