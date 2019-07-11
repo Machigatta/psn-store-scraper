@@ -27,6 +27,20 @@ Scraper.scrape("https://store.playstation.com/de-de/product/EP1003-CUSA02231_00-
 });
 ```
 
+Settings:
+```js 
+//sets the console.log flags
+let settingsObject = { 
+        logOutput: true, //default false
+        logError: true //default true
+    };
+
+Scraper.scrape("https://store.playstation.com/de-de/product/EP1003-CUSA02231_00-DISHONOREDGAMEEU", function(sObject){
+    console.log(sObject.name);
+}, settingsObject);
+```
+
+
 
 ### StoreObject
 

@@ -17,7 +17,10 @@ let StoreObject = function (id, name, old_price, discountCampaign, oType, oPlatf
     this.images = oImages;
 }
 
-Scraper.prototype.scrape = async function (url, callback) {
+Scraper.prototype.scrape = async function (url, callback, settingsObject) {
+    let _settings = (typeof settingsObject === 'undefined') ? { logOutput: false, logError: false } : settingsObject;
+    _settings.logOutput = (typeof _settings.logOutput === 'undefined') ? false : _settings.logOutput;
+    _settings.logError = (typeof _settings.logError === 'undefined') ? true : _settings.logError;
 
     var mRegExp = new RegExp(/(https:\/\/store.playstation.com\/)(.*)(\/.*\/)(.*)/);
     if (!mRegExp.test(url)) {
@@ -35,14 +38,16 @@ Scraper.prototype.scrape = async function (url, callback) {
 
 
         try {
-            console.log(storeApiUrl);
+            if (_settings.logOutput) {
+                console.log(storeApiUrl);    
+            }            
 
             let jsonBody = JSON.parse(await getJSON(storeApiUrl));
             let sObj = new StoreObject(
                 jsonBody.id,
                 jsonBody.name,
                 jsonBody.default_sku.display_price,
-                (jsonBody.default_sku.rewards != undefined) ? { new_price: jsonBody.default_sku.rewards[0].display_price, plus_required: jsonBody.default_sku.rewards[0].isPlus, discount_percent: jsonBody.default_sku.rewards[0].discount } : null,
+                (jsonBody.default_sku.rewards !== undefined && Object.entries(jsonBody.default_sku.rewards).length !== 0 && jsonBody.default_sku.constructor === Object) ? { new_price: jsonBody.default_sku.rewards[0].display_price, plus_required: jsonBody.default_sku.rewards[0].isPlus, discount_percent: jsonBody.default_sku.rewards[0].discount } : null,
                 jsonBody.game_contentType,
                 jsonBody.playable_platform,
                 jsonBody.release_date,
@@ -50,11 +55,16 @@ Scraper.prototype.scrape = async function (url, callback) {
                 jsonBody.long_desc,
                 jsonBody.images
             );
+            if (_settings.logOutput) {
+                console.log(sObj);    
+            }
             (typeof callback != 'undefined') ? callback(sObj) : null;
             return sObj;
         } catch (error) {
-            console.error('ERROR:');
-            console.error(error);
+            if (_settings.logError) {
+                console.error('ERROR:');
+                console.error(error);
+            }
         }
 
     }
@@ -72,4 +82,4 @@ function getJSON(url) {
     });
 }
 
-module.exports.Scraper = Scraper;
+module.exports.Scraper = new Scraper();
