@@ -6,3 +6,4 @@ dist_test
 .vscode
 .nyc_output
 coverage
+package-lock.json
