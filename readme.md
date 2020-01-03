@@ -1,13 +1,13 @@
 # psn-store-scraper
 
 
-### Install
+## Install
 
 Fetch the newest version via NPM
 
 `npm install psn-store-scraper`
 
-### Usage
+## Usage
 
 Import the constructor:
 
@@ -15,14 +15,14 @@ Import the constructor:
 let Scraper = require('psn-store-scraper').Scraper;
 ```
 
-Using the plain object retrieve:
+Using the Promises to retrieve:
 ```js 
-let sObject = Scraper.scrape("https://store.playstation.com/de-de/product/EP1003-CUSA02231_00-DISHONOREDGAMEEU");
+Scraper.scrape("https://store.playstation.com/de-de/product/XXXXX").then(result => console.log(result))
 ```
 
 Calling a Callback:
 ```js 
-Scraper.scrape("https://store.playstation.com/de-de/product/EP1003-CUSA02231_00-DISHONOREDGAMEEU", function(sObject){
+Scraper.scrape("https://store.playstation.com/de-de/product/XXXXX", function(sObject){
     console.log(sObject.name);
 });
 ```
@@ -35,14 +35,14 @@ let settingsObject = {
         logError: true //default true
     };
 
-Scraper.scrape("https://store.playstation.com/de-de/product/EP1003-CUSA02231_00-DISHONOREDGAMEEU", function(sObject){
+Scraper.scrape("https://store.playstation.com/de-de/product/XXXXX", function(sObject){
     console.log(sObject.name);
 }, settingsObject);
 ```
 
 
 
-### StoreObject
+## StoreObject
 
 ```js
     id
